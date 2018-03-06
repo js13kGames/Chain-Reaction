@@ -7,6 +7,7 @@ var pcolorM=new Array(9);
 var gameover=false;
 var canvas=document.getElementById("canvas");
 var board = canvas.getContext("2d");
+var turnind=document.getElementById("turn");
 canvas.addEventListener("click", game);
 var timer;
 var counter=0;
@@ -21,7 +22,7 @@ function initialize()
 	drawboard();
 	turns=0;
 	counter=0;
-	timer=setInterval(update, 200);
+	timer=setInterval(update, 400);
 }
 
 function initializeM()
@@ -48,11 +49,18 @@ function Minitial()
 function drawboard()
 {
 	board.clearRect(0, 0, width, height);
-	if(turns% 2 == 0)
+	if(turns% 2 == 0){
 		board.strokeStyle = "red";
-	else
-		board.strokeStyle = "green";
+		turnind.style.backgroundColor="red";
+		canvas.style.border="1px solid red";
+	}
 
+	else{
+		board.strokeStyle = "green";
+		turnind.style.backgroundColor="green";
+		canvas.style.border="1px solid green";
+	
+	}
 		for(var i=0;i<6;i++){
 		for(var j=0;j<9;j++){
 			board.strokeRect(i*60,j*60,60,60);
@@ -214,7 +222,7 @@ function check()
 		drawboard();
 		setTimeout(resultscreen.bind(null,pwin()),2500);
 		clearInterval(timer);
-		setTimeout(initialize,6000);
+		setTimeout(initialize,5000);
 	}
 }
 function unset()
@@ -268,7 +276,8 @@ function resultscreen(player)
 		board.fillRect(0,0,width,height);
 		board.fillStyle="red";
 		board.font = "32px Sans";
-		board.fillText("Player 1 wins!", width/2-50, height/2-50);
+		board.fillText("RED wins!", width/2-100, height/2-50);
+	    turnind.style.backgroundColor="red";
 	}
 	else
 	{
@@ -277,7 +286,8 @@ function resultscreen(player)
 		board.fillRect(0,0,width,height);
 		board.fillStyle="green";
 		board.font = "32px Sans";
-		board.fillText("Player 2 wins!", width/2-50, height/2-50);
+		board.fillText("GREEN wins!", width/2-100, height/2-50);
+	    turnind.style.backgroundColor="green";
 	}
 }
 
@@ -287,13 +297,16 @@ function Circle1(row, column, color)
 	board.arc(column*60+30,row*60+30,10,0,2*Math.PI);
 	board.fillStyle=color;
 	board.fill();
-	if()
-	{
-	if(counter%2==0)
-		board.strokeStyle = "yellow";
-	else
-		board.strokeStyle = color;
-	}
+	if((countM[0][0]==1 && row==0 && column==0) || (countM[8][0]==1 && row==8 && column==0) || (countM[0][5]==1 && row==0 && column==5) || (countM[8][5]==1 && row==8 && column==5))
+    {
+    	if(counter%2==0)
+    		board.strokeStyle="black";
+    	else
+    		board.strokeStyle=color;
+
+    }
+    else
+    board.strokeStyle = "black";
 	board.lineWidth=2;
 	board.stroke();
 	board.closePath();
@@ -305,10 +318,16 @@ function Circle2(row, column, color)
 	board.arc(column*60+20,row*60+30,10,0,2*Math.PI);
 	board.fillStyle=color;
 	board.fill();
-	if(counter%2 == 0)
-			board.strokeStyle = "yellow";
-	else
-			board.strokeStyle = color;
+	if(((row==0 || row==8) && (column<5 && column>=1)) || ((column==0 || column==5) && (row<8 && row>=1)))
+    {
+    	if(counter%2==0)
+    		board.strokeStyle="black";
+    	else
+    		board.strokeStyle=color;
+
+    }
+    else
+    board.strokeStyle = "black";
 	board.lineWidth=2;
 	board.stroke();
 	board.closePath();
@@ -317,10 +336,16 @@ function Circle2(row, column, color)
 	board.arc(column*60+40,row*60+30,10,0,2*Math.PI);
 	board.fillStyle = color;
 	board.fill();
-	if(counter%2 == 0)
-			board.strokeStyle = "yellow";
-	else
-			board.strokeStyle = color;
+	if(((row==0 || row==8) && (column<5 && column>=1)) || ((column==0 || column==5) && (row<8 && row>=1)))
+    {
+    	if(counter%2==0)
+    		board.strokeStyle="black";
+    	else
+    		board.strokeStyle=color;
+
+    }
+    else
+    board.strokeStyle = "black";
 	board.lineWidth=2;
 	board.stroke();
 	board.closePath();
@@ -332,11 +357,11 @@ function Circle3(row, column, color)
 	board.arc(column*60+20,row*60+15,10,0,2*Math.PI);
 	board.fillStyle = color;
 	board.fill();
-	if(counter%2 == 0)
-		board.strokeStyle="yelllow";
-	else
-		board.strokeStyle=color;
-	board.lineWidth=2;
+	if(counter%2==0)
+    		board.strokeStyle="black";
+    else
+    		board.strokeStyle=color;
+        board.lineWidth=2;
 	board.stroke();
 	board.closePath();
 	board.lineWidth=1;
@@ -345,12 +370,11 @@ function Circle3(row, column, color)
 	board.arc(column*60+20,row*60+45,10,0,2*Math.PI);
 	board.fillStyle=color;
 	board.fill();
-	if
-	if(counter%2 == 0)
-		board.strokeStyle = "yellow";
-	else
-		board.strokeStyle=color;
-	board.lineWidth=2;
+    if(counter%2==0)
+    		board.strokeStyle="black";
+    else
+    		board.strokeStyle=color;
+    board.lineWidth=2;
 	board.stroke();
 	board.closePath();
 	board.lineWidth = 1;
@@ -359,12 +383,11 @@ function Circle3(row, column, color)
 	board.arc(column*60+40,row*60+30,10,0,2*Math.PI);
 	board.fillStyle = color;
 	board.fill();
-
 	if(counter%2==0)
-		board.strokeStyle="yellow";
-	else
-		board.strokeStyle=color;
-	board.lineWidth=2;
+    		board.strokeStyle="black";
+    else
+    		board.strokeStyle=color;
+    board.lineWidth=2;
 	board.stroke();
 	board.closePath();
 	board.lineWidth=1;
